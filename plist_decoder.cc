@@ -176,6 +176,14 @@ std::string pbx::PlistDecoder::_parse_literal()
 			literal += _str[_index++];
 	
 	_parse_padding();
+	
+	std::string::size_type pos = literal.find("\\\"");
+	while (pos != std::string::npos)
+	{
+		literal = literal.replace(pos, 2, "\"");
+		pos = literal.find("\\\"");
+	}
+	
 	return literal;
 }
 

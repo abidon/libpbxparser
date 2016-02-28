@@ -23,6 +23,7 @@
 
 #pragma once
 
+#include <cstdint>
 #include <map>
 #include <string>
 #include <vector>
@@ -35,6 +36,7 @@ namespace pbx {
 	
 	class Value
 	{
+	public:
 		typedef enum
 		{
 			UnknownType,
@@ -43,6 +45,7 @@ namespace pbx {
 			StringType,
 		} Type;
 		
+	private:
 		Type _type;
 		
 		pbx::Array _a;
@@ -79,6 +82,9 @@ namespace pbx {
 		
 		const pbx::Value::Type
 		type() const;
+		
+		const uint64_t
+		unsigned_value() const;
 		
 		pbx::Value& operator=(const pbx::Array& a);
 		pbx::Value& operator=(const pbx::Dictionary& d);

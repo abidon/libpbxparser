@@ -23,6 +23,8 @@
 
 #include "value.hpp"
 
+#include <sstream>
+
 #define VALUE_TYPE_AS_STRING(t) (t == pbx::Value::StringType ? "string" : (t == pbx::Value::ArrayType ? "array" : (t == pbx::Value::DictionaryType ? "dictionary" : "unknown")))
 
 pbx::Value::Value(const pbx::Array& a) :
@@ -107,6 +109,20 @@ const pbx::Value::Type
 pbx::Value::type() const
 {
 	return _type;
+}
+
+const uint64_t
+pbx::Value::unsigned_value() const
+{
+	if (type() != pbx::Value::StringType)
+		throw std::invalid_argument(std::string("Can't return value as a string when it's type is ") + VALUE_TYPE_AS_STRING(type()));
+	
+	uint64_t num;
+	
+	std::stringstream ss(_s);
+	ss >> num;
+	
+	return num;
 }
 
 pbx::Value& pbx::Value::operator=(const pbx::Array& a)
